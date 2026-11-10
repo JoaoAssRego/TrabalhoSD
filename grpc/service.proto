@@ -1,0 +1,21 @@
+syntax = "proto3";
+package task;
+
+// Definición del servicio y los paradigmas de comunicación
+service TaskService {
+  // 1. Paradigma Unario: Petición y respuesta simple
+  rpc ExecuteTask (TaskRequest) returns (TaskResponse);
+
+  // 2. Paradigma Streaming Bidireccional: Flujo continuo de datos
+  rpc StreamTasks (stream TaskRequest) returns (stream TaskResponse);
+}
+
+message TaskRequest {
+  int32 task_id = 1;
+  string payload = 2;
+}
+
+message TaskResponse {
+  int32 task_id = 1;
+  string status = 2;
+}
