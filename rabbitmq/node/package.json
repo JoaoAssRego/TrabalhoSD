@@ -1,0 +1,10 @@
+{
+  "name": "rabbitmq-sd-node",
+  "version": "1.0.0",
+  "description": "Exemplos de RabbitMQ (AMQP 0-9-1) em Node.js - interoperam com os exemplos em Python",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "amqplib": "0.10.9"
+  }
+}

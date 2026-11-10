@@ -1,0 +1,25 @@
+# Broker RabbitMQ usado por todos os exemplos (Python e Node.js).
+#   docker compose up -d        -> sobe o broker
+#   docker compose restart      -> reinicia (usado na demo de persistência)
+#   Painel de gerenciamento: http://localhost:15672  (guest / guest)
+services:
+  rabbitmq:
+    image: rabbitmq:4.1-management
+    container_name: sd-rabbitmq
+    # O hostname fixo mantém o mesmo nome de nó entre reinícios; sem isso o
+    # RabbitMQ não reencontraria as filas duráveis gravadas no volume.
+    hostname: sd-rabbitmq
+    ports:
+      - "5672:5672"   # AMQP 0-9-1 (usado pelos clientes pika e amqplib)
+      - "15672:15672" # painel web de gerenciamento
+    volumes:
+      - ./enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  rabbitmq-data:
